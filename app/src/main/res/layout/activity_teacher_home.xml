@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Teacher Dashboard"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="12dp"/>
+
+    <Button
+        android:id="@+id/btnCreateSession"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Attendance Session"/>
+
+    <TextView
+        android:id="@+id/txtSessionCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Session Code: -"
+        android:textSize="16sp"
+        android:layout_marginTop="14dp"/>
+
+    <ImageView
+        android:id="@+id/imgQr"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"/>
+
+    <Button
+        android:id="@+id/btnEndSession"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="End Session"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Live Attendance"
+        android:textStyle="bold"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="8dp"/>
+
+    <ListView
+        android:id="@+id/listAttendance"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btnExportCsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Export Attendance (CSV)"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>
