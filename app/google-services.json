@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "363879068912",
+    "firebase_url": "https://smartattendancesystem-ed2e9-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smartattendancesystem-ed2e9",
+    "storage_bucket": "smartattendancesystem-ed2e9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363879068912:android:6c9bfa7e36b5800f00be35",
+        "android_client_info": {
+          "package_name": "com.example.smartattendancesystem"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcJxLITHRFhW51kIHDgIpERpPs6c_Py7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
