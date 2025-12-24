@@ -15,10 +15,23 @@
         android:layout_marginBottom="12dp"/>
 
     <Button
+        android:id="@+id/btnManageClasses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Manage Classes" />
+
+    <Spinner
+        android:id="@+id/spClasses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+    <Button
         android:id="@+id/btnCreateSession"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create Attendance Session"/>
+        android:text="Create Session for Selected Class"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/txtSessionCode"
@@ -36,6 +49,13 @@
         android:layout_marginTop="12dp"/>
 
     <Button
+        android:id="@+id/btnViewPresentAbsent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Present / Absent"
+        android:layout_marginTop="10dp"/>
+
+    <Button
         android:id="@+id/btnEndSession"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +65,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Live Attendance"
+        android:text="Live Present"
         android:textStyle="bold"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="8dp"/>
@@ -60,7 +80,7 @@
         android:id="@+id/btnExportCsv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Export Attendance (CSV)"
+        android:text="Export Present (CSV)"
         android:layout_marginTop="10dp"/>
 
 </LinearLayout>
