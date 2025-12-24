@@ -8,44 +8,34 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Student Dashboard"
+        android:text="Manage Classes"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:layout_marginBottom="20dp"/>
-
-    <EditText
-        android:id="@+id/etSessionCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Session Code"
-        android:inputType="textCapCharacters"
         android:layout_marginBottom="12dp"/>
 
-    <Button
-        android:id="@+id/btnSubmitCode"
+    <EditText
+        android:id="@+id/etClassName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Submit Session Code"/>
+        android:hint="Class name (e.g. BSCS-6A)" />
 
     <Button
-        android:id="@+id/btnScanQr"
+        android:id="@+id/btnCreateClass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Scan QR Code"
-        android:layout_marginTop="12dp"/>
-
-    <Button
-        android:id="@+id/btnMyHistory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="My Attendance History"
-        android:layout_marginTop="12dp"/>
+        android:text="Create Class"
+        android:layout_marginTop="10dp"/>
 
     <TextView
-        android:id="@+id/txtStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginTop="16dp"/>
+        android:text="Tap a class to open roster"
+        android:layout_marginTop="12dp"/>
+
+    <ListView
+        android:id="@+id/listClasses"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>

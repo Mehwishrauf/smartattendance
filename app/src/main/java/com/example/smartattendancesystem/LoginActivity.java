@@ -45,6 +45,10 @@ public class LoginActivity extends AppCompatActivity {
         return rbTeacher.isChecked() ? "teacher" : "student";
     }
 
+    private static String emailKey(String email) {
+        return email.trim().toLowerCase().replace(".", "_");
+    }
+
     private void register() {
         String email = etEmail.getText().toString().trim();
         String pass = etPassword.getText().toString().trim();
@@ -64,8 +68,15 @@ public class LoginActivity extends AppCompatActivity {
                     user.put("email", email);
                     user.put("role", role);
 
+                    // 1) Save profile
                     db.child("users").child(u.getUid()).setValue(user)
-                            .addOnSuccessListener(v -> txtStatus.setText("Registered. Now Login"));
+                            .addOnSuccessListener(v -> {
+                                // 2) Save email -> uid mapping (for teacher roster by email)
+                                db.child("emailToUid").child(emailKey(email)).setValue(u.getUid())
+                                        .addOnSuccessListener(x -> txtStatus.setText("Registered. Now Login"))
+                                        .addOnFailureListener(e -> txtStatus.setText("Mapping failed: " + e.getMessage()));
+                            })
+                            .addOnFailureListener(e -> txtStatus.setText(e.getMessage()));
                 })
                 .addOnFailureListener(e -> txtStatus.setText(e.getMessage()));
     }
@@ -99,22 +110,17 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                         String role = snapshot.child("role").getValue(String.class);
-
                         if (role == null) {
                             txtStatus.setText("Role is NULL in DB");
                             return;
                         }
 
-                        txtStatus.setText("Role = " + role + ", routing...");
-
                         if ("teacher".equals(role)) {
                             startActivity(new Intent(LoginActivity.this, TeacherHomeActivity.class));
                             finish();
-                        } else if ("student".equals(role)) {
+                        } else {
                             startActivity(new Intent(LoginActivity.this, StudentHomeActivity.class));
                             finish();
-                        } else {
-                            txtStatus.setText("Unknown role: " + role);
                         }
                     }
 
@@ -124,5 +130,4 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
 }
