@@ -17,7 +17,6 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     EditText etEmail, etPassword;
-    RadioButton rbStudent, rbTeacher;
     TextView txtStatus;
 
     FirebaseAuth auth;
@@ -30,8 +29,6 @@ public class LoginActivity extends AppCompatActivity {
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
-        rbStudent = findViewById(R.id.rbStudent);
-        rbTeacher = findViewById(R.id.rbTeacher);
         txtStatus = findViewById(R.id.txtStatus);
 
         auth = FirebaseAuth.getInstance();
@@ -41,10 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.btnLogin).setOnClickListener(v -> login());
     }
 
-    private String getRole() {
-        return rbTeacher.isChecked() ? "teacher" : "student";
-    }
-
     private static String emailKey(String email) {
         return email.trim().toLowerCase().replace(".", "_");
     }
@@ -52,31 +45,58 @@ public class LoginActivity extends AppCompatActivity {
     private void register() {
         String email = etEmail.getText().toString().trim();
         String pass = etPassword.getText().toString().trim();
-        String role = getRole();
 
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
             txtStatus.setText("Email & Password required");
             return;
         }
 
+        txtStatus.setText("Registering...");
+
         auth.createUserWithEmailAndPassword(email, pass)
                 .addOnSuccessListener(res -> {
                     FirebaseUser u = auth.getCurrentUser();
-                    if (u == null) return;
+                    if (u == null) {
+                        txtStatus.setText("Register ok but user is null");
+                        return;
+                    }
 
-                    Map<String, Object> user = new HashMap<>();
-                    user.put("email", email);
-                    user.put("role", role);
+                    // Decide role automatically:
+                    // If email in pendingTeachers -> teacher else student
+                    String eKey = emailKey(email);
 
-                    // 1) Save profile
-                    db.child("users").child(u.getUid()).setValue(user)
-                            .addOnSuccessListener(v -> {
-                                // 2) Save email -> uid mapping (for teacher roster by email)
-                                db.child("emailToUid").child(emailKey(email)).setValue(u.getUid())
-                                        .addOnSuccessListener(x -> txtStatus.setText("Registered. Now Login"))
-                                        .addOnFailureListener(e -> txtStatus.setText("Mapping failed: " + e.getMessage()));
-                            })
-                            .addOnFailureListener(e -> txtStatus.setText(e.getMessage()));
+                    db.child("pendingTeachers").child(eKey)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot pendingSnap) {
+
+                                    String role = pendingSnap.exists() ? "teacher" : "student";
+
+                                    Map<String, Object> user = new HashMap<>();
+                                    user.put("email", email);
+                                    user.put("role", role);
+                                    user.put("active", true);
+
+                                    Map<String, Object> updates = new HashMap<>();
+
+                                    updates.put("/users/" + u.getUid(), user);
+                                    updates.put("/emailToUid/" + eKey, u.getUid());
+
+                                    // consume pendingTeachers entry once used
+                                    if (pendingSnap.exists()) {
+                                        updates.put("/pendingTeachers/" + eKey, null);
+                                    }
+
+                                    db.updateChildren(updates)
+                                            .addOnSuccessListener(v -> txtStatus.setText("Registered as " + role + ". Now Login"))
+                                            .addOnFailureListener(e -> txtStatus.setText("DB save failed: " + e.getMessage()));
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError error) {
+                                    txtStatus.setText("DB error: " + error.getMessage());
+                                }
+                            });
                 })
                 .addOnFailureListener(e -> txtStatus.setText(e.getMessage()));
     }
@@ -84,6 +104,13 @@ public class LoginActivity extends AppCompatActivity {
     private void login() {
         String email = etEmail.getText().toString().trim();
         String pass = etPassword.getText().toString().trim();
+
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
+            txtStatus.setText("Email & Password required");
+            return;
+        }
+
+        txtStatus.setText("Logging in...");
 
         auth.signInWithEmailAndPassword(email, pass)
                 .addOnSuccessListener(res -> routeUser())
@@ -109,13 +136,23 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
 
+                        Boolean active = snapshot.child("active").getValue(Boolean.class);
+                        if (active != null && !active) {
+                            txtStatus.setText("Account disabled. Contact admin.");
+                            FirebaseAuth.getInstance().signOut();
+                            return;
+                        }
+
                         String role = snapshot.child("role").getValue(String.class);
                         if (role == null) {
                             txtStatus.setText("Role is NULL in DB");
                             return;
                         }
 
-                        if ("teacher".equals(role)) {
+                        if ("admin".equals(role)) {
+                            startActivity(new Intent(LoginActivity.this, AdminHomeActivity.class));
+                            finish();
+                        } else if ("teacher".equals(role)) {
                             startActivity(new Intent(LoginActivity.this, TeacherHomeActivity.class));
                             finish();
                         } else {
