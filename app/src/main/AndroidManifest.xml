@@ -19,6 +19,21 @@
         android:theme="@style/Theme.SmartAttendanceSystem"
         tools:targetApi="31">
         <activity
+            android:name=".AdminDatabaseManagerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminReportsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminAnalyticsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminManageTeachersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminHomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".SessionDetailsActivity"
             android:exported="false" />
         <activity

@@ -8,45 +8,35 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Smart Attendance System"
+        android:text="Add / Manage Teachers"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:gravity="center"
-        android:layout_marginBottom="18dp"/>
+        android:layout_marginBottom="12dp"/>
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etTeacherEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="Teacher email (add to pending)"
         android:inputType="textEmailAddress"/>
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:layout_marginTop="10dp"/>
-
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnAddPending"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:layout_marginTop="12dp"/>
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register"
+        android:text="Add Pending Teacher"
         android:layout_marginTop="10dp"/>
 
     <TextView
-        android:id="@+id/txtStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginTop="12dp"/>
+        android:text="Teachers list (tap to enable/disable)"
+        android:layout_marginTop="14dp"/>
+
+    <ListView
+        android:id="@+id/listTeachers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>
