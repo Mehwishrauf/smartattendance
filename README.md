@@ -1,38 +1,73 @@
 # Smart Attendance System
 
-A mobile-based Android application designed to manage attendance efficiently
-for administrators, teachers, and students using role-based access.
+## 📌 Project Overview
+The **Smart Attendance System** is an Android application designed to automate classroom
+attendance using **QR codes**, **role-based access**, and **real-time cloud storage**.
+The system supports three user roles: **Admin**, **Teacher**, and **Student**.
+Each role has clearly defined permissions to ensure secure and accurate attendance management.
 
-##  Technologies Used:
-- Java
-- Android
-- Android Studio
-- XML (User Interface Design)
+## 🛠 Technologies Used
 
-## ✨ Features:
+| Technology                    | Purpose |
+|---------------------- --------|--------|
+| Android Studio (Java)         |   Android application development |
+| Firebase Authentication       | User login and registration |
+| Firebase Realtime Database    |Store attendance, users, and sessions |
+| ZXing Library                 | QR code generation and scanning |
+| CSV Export                    |Attendance reporting |
+| SharedPreferences             |Session persistence |
+| Git & GitHub                  |Version control |
 
-### Admin Module
-- Admin dashboard
-- Manage teachers
-- Manage classes
+---
+
+## 👥 System Roles & Responsibilities
+
+### 🔹 Admin
+The **Admin** is the highest authority in the system.
+
+**Admin can:**
+- Add and manage teachers (via pending approval system)
+- View system analytics (users, classes, sessions)
+- Manage database records
 - View attendance reports
-- Attendance analytics
-- Database management
+- Monitor overall system usage
 
-### Teacher Module
-- Teacher dashboard
-- Manage classes
-- View class roster
-- View session details
+**Note:** Admin does **not** mark attendance.
 
-### Student Module
-- Student dashboard
+---
+
+### 🔹 Teacher
+Teachers manage classes and attendance sessions.
+
+**Teacher can:**
+- Create classes
+- Add students to class roster
+- Create attendance sessions
+- Generate QR codes
+- View live attendance
+- View present and absent students
+- Export attendance as CSV
+- View monthly attendance reports
+
+---
+
+### 🔹 Student
+Students can mark and track their attendance.
+
+**Student can:**
+- Register and login
+- Join classes assigned by teachers
+- Scan QR codes to mark attendance
 - View attendance history
-- View session details
+- View present records (read-only)
 
-### Common Features
-- Secure login system
-- Role-based access control
+---
+
+## 🔐 Authentication & Role Management
+
+### Firebase Authentication
+- Handles user login and registration
+- Email and Password based authentication
 
 ## 📁 Project Structure
 ```text
